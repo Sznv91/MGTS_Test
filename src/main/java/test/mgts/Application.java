@@ -2,21 +2,21 @@ package test.mgts;
 
 import test.mgts.model.Contact;
 import test.mgts.service.StorageService;
+import test.mgts.utils.CharsetDetector;
 
 import java.io.BufferedReader;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
-import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 import static test.mgts.Main.STATE_LOCATION;
 
-public class Application implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Application {
     private final StorageService storageService;
     private static final String MESSAGE_ERROR = "Неверный формат ввода данных. Пример использования: ";
 
@@ -36,29 +36,18 @@ public class Application implements Serializable {
 
         System.out.printf(greetingMessage);
 
-        //Определение charset на основании ОС., для корректного ввода текста в консоле.
-        String osName = System.getProperty("os.name");
-        String charSet = "UTF8";
-        if (osName.startsWith("Windows")) {
-            charSet = "cp866";
-        }
-
         InputStream inputStream = System.in;
-        Reader inputStreamReader = new InputStreamReader(inputStream, charSet);
+        Reader inputStreamReader = new InputStreamReader(inputStream, CharsetDetector.getCharsetConsole());
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
         while (true) {
             String input = bufferedReader.readLine();
             if (input.equals("exit")) {
-                //создаем 2 потока для сериализации объекта и сохранения его в файл
-                FileOutputStream outputStream = new FileOutputStream(STATE_LOCATION, false);
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-
-                // сохраняем состояние в файл
-                objectOutputStream.writeObject(this);
-
+                OutputStreamWriter fileWriter = new OutputStreamWriter(Files.newOutputStream(Paths.get(STATE_LOCATION)), CharsetDetector.getCharsetFile());
+                for(Contact contact: storageService.getAll()) {
+                    fileWriter.write(String.format("%s %s %s" + System.lineSeparator(), contact.getFirstName(), contact.getSecondName(), contact.getPassNumber()));
+                }
                 //закрываем потоки и освобождаем ресурсы
-                objectOutputStream.close();
-                outputStream.close();
+                fileWriter.close();
                 bufferedReader.close();
                 inputStreamReader.close();
                 inputStream.close();

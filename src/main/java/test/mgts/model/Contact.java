@@ -5,14 +5,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class Contact implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Contact {
     private String firstName;
     private String secondName;
     private String passNumber;

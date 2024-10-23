@@ -4,12 +4,10 @@ import test.mgts.model.Contact;
 import test.mgts.utils.ExistStorageException;
 import test.mgts.utils.NotFoundStorageException;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListStorage extends AbstractStorage<String> implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class ListStorage extends AbstractStorage<String> {
     private final List<Contact> storage = new ArrayList<>();
 
     @Override

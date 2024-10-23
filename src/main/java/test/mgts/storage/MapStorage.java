@@ -4,14 +4,12 @@ import test.mgts.model.Contact;
 import test.mgts.utils.ExistStorageException;
 import test.mgts.utils.NotFoundStorageException;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MapStorage extends AbstractStorage<String> implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class MapStorage extends AbstractStorage<String> {
     private final Map<String, Contact> storage = new HashMap<>();
 
     @Override

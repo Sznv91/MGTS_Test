@@ -11,8 +11,7 @@ import java.util.List;
 
 import static test.mgts.utils.Validator.*;
 
-public class StorageService implements Storage, Serializable {
-    private static final long serialVersionUID = 1L;
+public class StorageService implements Storage {
     Storage storage;
 
     public StorageService(Storage storage) {
