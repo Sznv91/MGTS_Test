@@ -29,12 +29,6 @@ public class Main {
             application = new Application(service);
         }
 
-        /*StorageService service;
-        if (args.length > 0 && args[0].equals("map")) {
-            service = new StorageService(new MapStorage());
-        } else service = new StorageService(new ListStorage());
-        application = new Application(service);*/
-
         application.work();
     }
 
