@@ -12,6 +12,7 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 
 import static test.mgts.Main.STATE_LOCATION;
@@ -58,14 +59,10 @@ public class Application {
                 System.out.printf(greetingMessage);
                 continue;
             }
+            List<String> commands = Arrays.asList("add", "show-all", "show-all-only-number", "search", "delete", "help");
             String[] splitInput = input.split(" ");
             if (splitInput.length > 0 &&
-                    !splitInput[0].equals("add") &&
-                    !splitInput[0].equals("show-all") &&
-                    !splitInput[0].equals("show-all-only-number") &&
-                    !splitInput[0].equals("search") &&
-                    !splitInput[0].equals("delete") &&
-                    !splitInput[0].equals("help")) {
+                    !commands.contains(splitInput[0])) {
                 System.out.println("Команда не распознана");
                 continue;
             }
